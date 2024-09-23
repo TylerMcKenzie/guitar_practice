@@ -1,0 +1,79 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        (() => {
+            class Form {
+                constructor(id, input_keys, form_classes = [], input_classes = []) {
+                    this.input_keys = input_keys;
+                    this.id = id;
+                    this.form_classes = form_classes;
+                    this.input_classes = input_classes;
+
+                    this.formElement = this.generateForm();
+                }
+
+                getFormElement() {
+                    return this.formElement;
+                }
+
+                generateForm() {
+                    let formElement = document.createElement("form");
+                    formElement.id = this.id;
+
+                    formElement.innerHTML = this.generateFormInputs();
+
+                    formElement.innerHTML += "<button>SUBMIT</button>"
+
+                    return formElement;
+                }
+
+                generateFormInputs() {
+                    let generatedHTML = "";
+
+                    for (let input_key of this.input_keys) {
+                        generatedHTML += this.generateFormInput(input_key);
+                    }
+
+                    return generatedHTML;
+                }
+
+                generateFormInput(input_name) {
+                    let html =  
+                        "<div>" +
+                            "<label>" + input_name + "</label>" +
+                            "<input name=\"" + input_name + "\" />" +
+                        "</div>";
+
+                    return html;
+                }
+            }
+
+            class TestForm extends Form {
+                constructor(id, input_keys) {
+                    super(id, input_keys);
+                }
+            }
+
+            (function main() {
+                let chord_inputs = ["A Major", "B Major", "C Major", "D Major", "E Major", "F Major", "G Major", "A Minor", "B Minor", "C Minor", "D Minor", "E Minor", "F Minor", "G Minor"];
+                let chordsForm = new TestForm("chords_form", chord_inputs);
+
+                let chords_form_element = chordsForm.generateForm()
+                document.body.appendChild(chordsForm.getFormElement());
+                
+                chordsForm.getFormElement().addEventListener("submit", (evt) => {
+                    evt.preventDefault();
+                    
+                    
+                })
+
+            })()
+        })()
+    </script>
+</body>
+</html>
